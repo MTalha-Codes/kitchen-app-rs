@@ -18,14 +18,14 @@ use std::{env, fs};
 ///     Err(_) => println!("Login Failed")
 /// }
 /// ```
-pub struct LogIn
+pub struct Login
 { 
     user_name: String,
     password: String,
     file_path: String
 }
 
-impl LogIn {
+impl Login {
     
     /// # The `new` method.
     /// this function (in the struct `LogIn`) is used to initialize the fields; you can say this is a constructor.
@@ -45,10 +45,10 @@ impl LogIn {
                 cwd.push(_user_name);
                 cwd.set_file_name(_user_name);
                 cwd.set_extension("cred");
-                cwd.to_str().unwrap().to_string()
+                cwd.to_str().expect("Couldn't proceed recovery of &str from Option<&str>").to_string()
             };
         
-        LogIn{
+        Login {
             user_name: _user_name.to_string(),
             password: _password.to_string(),
             file_path: construct_and_return_path_for_user_credentials_file() 
@@ -75,9 +75,6 @@ impl LogIn {
     /// * The program hasn't permission to read the user credential file.
     /// * The provided credentials are not correct. 
     pub fn authenticate_user(&self) -> Result<&str,&str> {
-        println!("self.file_path = {}",self.file_path);
-        println!("self.user_name = {}",self.user_name);
-        println!("self.password = {}",self.password);
         if !self.check_user_existence() {
             Err("Failed to authenticate user (why? user doesn't exists)")
         } else {

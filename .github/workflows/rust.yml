@@ -1,4 +1,4 @@
-name: Rust
+name: "Roob's Kitchen App"
 
 on:
   push:
@@ -12,11 +12,11 @@ env:
 jobs:
   build:
 
-    runs-on: ubuntu-latest
+    runs-on: [windows-latest,macos-latest,ubuntu-latest]
 
     steps:
     - uses: actions/checkout@v4
-    - name: Build
+    - name: Compile
       run: cargo build --verbose
-    - name: Run tests
+    - name: Unit Test
       run: cargo test --verbose
